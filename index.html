@@ -2,18 +2,23 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>GLB Animation Test</title>
+    <title>GLB Animation + Music</title>
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
   </head>
   <body>
     <a-scene>
-      <!-- カメラと光源 -->
+      <!-- カメラと視点操作 -->
       <a-entity camera position="0 1.6 3" look-controls wasd-controls></a-entity>
+
+      <!-- ライト -->
       <a-entity light="type: ambient; intensity: 0.8"></a-entity>
       <a-entity light="type: directional; intensity: 0.5" position="1 1 1"></a-entity>
 
-      <!-- glbモデル -->
+      <!-- 音楽の再生 -->
+      <a-entity sound="src: url(Gift.low.mp3); autoplay: true; loop: false" position="0 1.6 0"></a-entity>
+
+      <!-- アニメーション付きGLBモデル -->
       <a-entity gltf-model="Test.glb"
                 animation-mixer
                 position="0 0 0"
