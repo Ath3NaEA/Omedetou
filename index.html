@@ -1,32 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
     <meta charset="utf-8">
     <title>GLB Animation + Music</title>
+
+    <!-- A-Frame & Extras -->
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
+
+    <style>
+      /* 音楽再生ボタンのスタイル */
+      #playButton {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        padding: 10px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    </style>
   </head>
+
   <body>
     <a-scene>
       <!-- カメラと視点操作 -->
-      <a-entity camera position="0 1.6 3" look-controls wasd-controls></a-entity>
+      <a-entity 
+        camera 
+        position="0 1.6 3" 
+        look-controls 
+        wasd-controls>
+      </a-entity>
 
-      <!-- ライト -->
+      <!-- ライト設定 -->
       <a-entity light="type: ambient; intensity: 0.8"></a-entity>
       <a-entity light="type: directional; intensity: 0.5" position="1 1 1"></a-entity>
 
-      <!-- 音楽の再生 -->
-      <a-entity sound="src: url(Gift.low.mp3); autoplay: true; loop: true" position="0 1.6 0"></a-entity>
-
       <!-- アニメーション付きGLBモデル -->
-      <a-entity gltf-model="Test.glb"
-                animation-mixer
-                position="0 0 0"
-                scale="1 1 1">
+      <a-entity 
+        gltf-model="Test.glb" 
+        animation-mixer 
+        position="0 0 0" 
+        scale="1 1 1">
       </a-entity>
 
       <!-- 背景 -->
       <a-sky color="#ECECEC"></a-sky>
     </a-scene>
+
+    <!-- 音楽再生ボタン -->
+    <button id="playButton">再生</button>
+    <audio id="audioPlayer" src="gift.mp3"></audio>
+
+    <script>
+      document.getElementById("playButton").addEventListener("click", function() {
+        let audio = document.getElementById("audioPlayer");
+        if (audio.paused) {
+          audio.play().catch(error => console.log("再生エラー:", error));
+        }
+      });
+    </script>
   </body>
 </html>
