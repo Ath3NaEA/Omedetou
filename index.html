@@ -4,8 +4,6 @@
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
   </head>
   <body>
-    <button onclick="requestPermission()">センサー許可</button>
-
     <a-scene>
 
       <a-entity 
@@ -14,39 +12,16 @@
         scale="1 1 1">
       </a-entity>
 
-      <a-entity id="camera" camera position="0 1.6 0"></a-entity>
+      <!-- 視点のみに関するカメラ設定 -->
+      <a-entity 
+        camera 
+        position="0 1.6 3" 
+        look-controls 
+        wasd-controls>
+      </a-entity>
 
       <a-light type="directional" position="1 1 1"></a-light>
       <a-sky color="#ECECEC"></a-sky>
     </a-scene>
-
-    <script>
-      function requestPermission() {
-        if (DeviceMotionEvent.requestPermission) {
-          DeviceMotionEvent.requestPermission().then(response => {
-            if (response === "granted") {
-              window.addEventListener("devicemotion", handleMotion);
-            }
-          });
-        } else {
-          window.addEventListener("devicemotion", handleMotion);
-        }
-      }
-
-      function handleMotion(event) {
-        const acceleration = event.accelerationIncludingGravity;
-        const camera = document.querySelector("#camera");
-
-        // Z軸の加速度で前進・後退
-        if (Math.abs(acceleration.z) > 0.5) {
-          camera.object3D.position.z += acceleration.z * -0.05;
-        }
-        
-        // X軸の加速度で左右移動
-        if (Math.abs(acceleration.x) > 0.5) {
-          camera.object3D.position.x += acceleration.x * 0.05;
-        }
-      }
-    </script>
   </body>
 </html>
