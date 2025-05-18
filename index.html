@@ -17,7 +17,9 @@
     <!-- A-Frameシーン -->
     <a-scene cursor="rayOrigin: mouse" raycaster="objects: .clickable">
       <!-- カメラ -->
-      <a-entity camera position="0 1.6 3" look-controls joystick></a-entity>
+      <a-entity id="rig" joystick position="0 1.6 0">
+        <a-camera wasd-controls-enabled="false" look-controls></a-camera>
+      </a-entity>
 
       <!-- 光源 -->
       <a-entity light="type: ambient; intensity: 1"></a-entity>
