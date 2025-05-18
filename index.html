@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-joystick-component@3.2.0/dist/aframe-joystick-component.min.js"></script>
+
   </head>
 
   <body>
@@ -15,7 +17,7 @@
     <!-- A-Frameシーン -->
     <a-scene cursor="rayOrigin: mouse" raycaster="objects: .clickable">
       <!-- カメラ -->
-      <a-entity camera position="0 1.6 3" look-controls wasd-controls
+      <a-entity camera position="0 1.6 3" look-controls wasd-controls joystick 
          ></a-entity>
 
       <!-- 光源 -->
