@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="utf-8" />
-    <title>タップでアニメと音再生</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
-  </head>
+<head>
+  <meta charset="utf-8" />
+  <title>2段階アニメ＋音</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
+</head>
 
-  <body>
-    <!-- 音楽 -->
-    <audio id="audioPlayer" src="gift.mp3" preload="auto"></audio>
+<body>
+  <!-- 音楽 -->
+  <audio id="audioPlayer" src="gift.mp3" preload="auto"></audio>
 
-    <!-- A-Frameシーン -->
-    <a-scene cursor="rayOrigin: mouse" raycaster="objects: .clickable">
-      <!-- カメラ -->
-      <a-entity camera position="0 1.5 0" look-controls wasd-controls
-         ></a-entity>
+  <a-scene cursor="rayOrigin: mouse" raycaster="objects: .clickable">
+    <!-- カメラ -->
+    <a-entity camera position="0 1.5 0" look-controls wasd-controls></a-entity>
 
-      <!-- 光源 -->
-      <a-entity light="type: ambient; intensity: 1"></a-entity>
+    <!-- 光源 -->
+    <a-entity light="type: ambient; intensity: 1"></a-entity>
 
+<<<<<<< HEAD
       <!-- GLBモデル（タップ対象） -->
       <a-gltf-model
         id="animatedModel"
@@ -31,27 +30,69 @@
         scale="1 1 1">
       </a-gltf-model>
     </a-scene>
+=======
+    <!-- 最初に表示されるGLBモデル -->
+    <a-gltf-model
+      id="animatedModel"
+      class="clickable"
+      src="box.glb"
+      position="0 0 0"
+      scale="1 1 1">
+    </a-gltf-model>
+>>>>>>> 1f20945 (Update index.html)
 
-    <script>
-      // DOM読み込み後にイベント設定
-      document.addEventListener("DOMContentLoaded", function () {
-        const model = document.getElementById("animatedModel");
-        const audio = document.getElementById("audioPlayer");
+    <!-- アニメーション後に出現するGLBモデル -->
+    <a-gltf-model
+      id="photoModel"
+      src="Photo2.glb"
+      position="0 0 0"
+      visible="false"
+      scale="1 1 1">
+    </a-gltf-model>
+  </a-scene>
 
-        // モデルをタップしたら
-        model.addEventListener("click", function () {
-          // アニメーションを再生（animation-mixer を後付け）
-          model.setAttribute("animation-mixer", "clip: *; loop: once; repetitions: 1; clampWhenFinished: true;");
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const boxModel = document.getElementById("animatedModel");
+      const photoModel = document.getElementById("photoModel");
+      const audio = document.getElementById("audioPlayer");
 
-          // 音声も再生（再生済みなら最初から）
-          if (audio.paused) {
-            audio.play().catch(err => console.log("音声エラー:", err));
-          } else {
-            audio.currentTime = 0;
-            audio.play();
-          }
+      let animationPlayed = false;
+
+      // box.glb をクリックしたらアニメーション再生
+      boxModel.addEventListener("click", function () {
+        if (animationPlayed) return;
+        animationPlayed = true;
+
+        boxModel.setAttribute("animation-mixer", {
+          clip: "*",
+          loop: "once",
+          clampWhenFinished: true
         });
       });
-    </script>
-  </body>
+
+      // アニメーション終了後の処理
+      boxModel.addEventListener("animation-finished", function () {
+        // box.glb を非表示に
+        boxModel.setAttribute("visible", "false");
+
+        // 音楽再生
+        if (audio.paused) {
+          audio.play().catch(err => console.log("音声エラー:", err));
+        } else {
+          audio.currentTime = 0;
+          audio.play();
+        }
+
+        // Photo2.glb を表示してアニメーション再生
+        photoModel.setAttribute("visible", "true");
+        photoModel.setAttribute("animation-mixer", {
+          clip: "*",
+          loop: "once",
+          clampWhenFinished: true
+        });
+      });
+    });
+  </script>
+</body>
 </html>
