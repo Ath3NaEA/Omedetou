@@ -30,8 +30,16 @@
 
     <!-- アニメーション後に出現するGLBモデル -->
     <a-gltf-model
-      id="photoModel"
-      src="Photo.glb"
+      id="A1Model"
+      src="A1.glb"
+      position="0 0 0"
+      visible="false"
+      scale="1 1 1">
+    </a-gltf-model>
+
+    <a-gltf-model
+      id="B1Model"
+      src="B1.glb"
       position="0 0 0"
       visible="false"
       scale="1 1 1">
@@ -41,7 +49,8 @@
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const boxModel = document.getElementById("animatedModel");
-      const photoModel = document.getElementById("photoModel");
+      const A1Model = document.getElementById("A1Model");
+      const B1Model = document.getElementById("B1Model");
       const audio = document.getElementById("audioPlayer");
 
       let animationPlayed = false;
@@ -60,6 +69,9 @@
 
       // アニメーション終了後の処理
       boxModel.addEventListener("animation-finished", function () {
+
+        const scene = document.querySelector("a-scene");
+
         // box.glb を非表示に
         boxModel.setAttribute("visible", "false");
 
@@ -72,12 +84,37 @@
         }
 
         // Photo2.glb を表示してアニメーション再生
-        photoModel.setAttribute("visible", "true");
-        photoModel.setAttribute("animation-mixer", {
+        A1Model.setAttribute("visible", "true");
+        A1Model.setAttribute("animation-mixer", {
           clip: "*",
           loop: "once",
           clampWhenFinished: true
         });
+      });
+
+      A1Model.addEventListener("animation-finished", function () {
+
+        A1Model.setAttribute("visible", "false");
+
+        B1Model.setAttribute("visible", "true");
+        B1Model.setAttribute("animation-mixer", {
+          clip: "*",
+          loop: "once",
+          clampWhenFinished: true
+        });
+      });
+
+      B1Model.addEventListener("animation-finished", function () {
+
+        B1Model.setAttribute("visible", "false");
+
+        const scene = document.querySelector("a-scene");
+
+        scene.setAttribute("background", "color: #000000");
+        setTimeout(() => {
+          scene.setAttribute("background", "color: #FFFFFF");
+        }, 1000);
+        
       });
     });
   </script>
