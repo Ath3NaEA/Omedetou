@@ -13,6 +13,21 @@
   <audio id="audioPlayer" src="gift.mp3" preload="auto"></audio>
 
   <a-scene cursor="rayOrigin: mouse" raycaster="objects: .clickable">
+
+    <!-- 背景（最初は白背景にしておく） -->
+    <a-assets>
+      <img id="bgImage" src="flower.jpeg">
+    </a-assets>
+
+    <!-- デフォルト白背景 -->
+    <a-sky id="skyWhite" color="#FFFFFF" visible="true"></a-sky>
+
+    <!-- 黒背景（最初は非表示） -->
+    <a-sky id="skyBlack" color="#000000" visible="false"></a-sky>
+
+    <!-- 画像背景（最初は非表示） -->
+    <a-sky id="skyImage" src="#bgImage" visible="false"></a-sky>
+
     <!-- カメラ -->
     <a-entity camera position="0 1.5 0" look-controls wasd-controls></a-entity>
 
@@ -108,13 +123,20 @@
 
         B1Model.setAttribute("visible", "false");
 
-        const scene = document.querySelector("a-scene");
+        const skyWhite = document.getElementById("skyWhite");
+        const skyBlack = document.getElementById("skyBlack");
+        const skyImage = document.getElementById("skyImage");
 
-        scene.setAttribute("background", "color: #000000");
+         // 白→黒へ
+        skyWhite.setAttribute("visible", "false");
+        skyBlack.setAttribute("visible", "true");
+
+        // 黒→画像へ（1秒後）
         setTimeout(() => {
-          scene.setAttribute("background", "color: #FFFFFF");
-        }, 1000);
-        
+          skyBlack.setAttribute("visible", "false");
+          skyImage.setAttribute("visible", "true");
+        }, 900);
+
       });
     });
   </script>
