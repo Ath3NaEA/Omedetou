@@ -54,6 +54,14 @@
       visible="false"
       scale="1 1 1">
     </a-gltf-model>
+
+    <a-gltf-model
+      id="chorus1Model"
+      src="chorus1.glb"
+      position="0 0 0"
+      visible="false"
+      scale="1 1 1">
+    </a-gltf-model>
   </a-scene>
 
   <script>
@@ -124,6 +132,13 @@
         setTimeout(() => {
         sky.setAttribute("src", "#bgImage");
         }, 900);
+
+        chorus1Model.setAttribute("visible", "true");
+        chorus1Model.setAttribute("animation-mixer", {
+          clip: "*",
+          loop: "once",
+          clampWhenFinished: true
+        });
 
       });
     });
