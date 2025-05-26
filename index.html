@@ -22,6 +22,7 @@
     </a-assets>
 
     <a-sky id="sky" src="#whiteImage"></a-sky>
+    
 
     <!-- カメラ -->
     <a-entity camera position="0 1.5 0" look-controls wasd-controls></a-entity>
@@ -69,6 +70,7 @@
       const boxModel = document.getElementById("animatedModel");
       const A1Model = document.getElementById("A1Model");
       const B1Model = document.getElementById("B1Model");
+      const chorus1Model = document.getElementById("chorus1Model");
       const audio = document.getElementById("audioPlayer");
 
       let animationPlayed = false;
@@ -131,7 +133,7 @@
         sky.setAttribute("src", "#blackImage");
         setTimeout(() => {
         sky.setAttribute("src", "#bgImage");
-        }, 900);
+        }, 600);
 
         chorus1Model.setAttribute("visible", "true");
         chorus1Model.setAttribute("animation-mixer", {
@@ -139,6 +141,16 @@
           loop: "once",
           clampWhenFinished: true
         });
+
+      });
+
+      chorus1Model.addEventListener("animation-finished", function () {
+
+        chorus1Model.setAttribute("visible", "false");
+
+        const sky = document.getElementById("sky");
+
+        sky.setAttribute("src", "#whiteImage");
 
       });
     });
